@@ -1,5 +1,6 @@
 package laratecsys.quicocada_servicee.Servicos;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,6 +26,9 @@ public class ProdutoService {
 	@Autowired
 	private CategoriaRepositories categoriaRepo;
 
+	@Autowired
+	private CategoriaService categoriaService;
+	
 	public Produto find(Integer id) {
 
 		Optional<Produto> obj = repo.findById(id);
@@ -36,6 +40,18 @@ public class ProdutoService {
 	public Produto insert(Produto obj) {
 
 		obj.setId(null);
+		
+		if(obj.getCategorias()!= null) {
+			for (Categoria ct : obj.getCategorias()) {
+				
+				
+				Categoria cat = categoriaService.find(ct.getId());
+				cat.getProdutos().add(obj);
+				
+				obj.getCategorias().add(cat);
+			}
+		}
+		
 		return repo.save(obj);
 	}
 
