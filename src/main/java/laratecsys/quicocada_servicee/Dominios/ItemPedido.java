@@ -126,8 +126,8 @@ public class ItemPedido implements Serializable{
 		builder.append(nf.format(getSubtotal()));
 		builder.append("\n");
 		return builder.toString();
+	
+	
 	}
-	
-	
-	
 }
+	
